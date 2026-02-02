@@ -1,8 +1,11 @@
 {
   "name": "dameng-mcp-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP Server for DaMeng Database",
   "main": "src/index.js",
+  "bin": {
+    "dameng-mcp-server": "./bin/dameng-mcp-server.js"
+  },
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
@@ -30,6 +33,7 @@
   },
   "files": [
     "src",
+    "bin",
     "README.md",
     "package.json",
     ".env.example"

@@ -17,6 +17,12 @@
 npm install -g dameng-mcp-server
 ```
 
+### 使用 npx（无需安装）
+
+```bash
+npx dameng-mcp-server
+```
+
 ### 本地安装
 
 ```bash
