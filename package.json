@@ -1,0 +1,49 @@
+{
+  "name": "dameng-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Server for DaMeng Database",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "dameng",
+    "database",
+    "dmdb"
+  ],
+  "author": {
+    "name": "zqeast",
+    "email": "zqeast@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zqeast/dameng-mcp-server.git"
+  },
+  "homepage": "https://github.com/zqeast/dameng-mcp-server#readme",
+  "bugs": {
+    "url": "https://github.com/zqeast/dameng-mcp-server/issues"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "package.json",
+    ".env.example"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "dmdb": "latest",
+    "dotenv": "^17.2.3",
+    "zod": "^4.3.6"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
