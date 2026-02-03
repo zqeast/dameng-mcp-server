@@ -1,4 +1,4 @@
-name: Publish to NPM
+name: Publish to NPM and GitHub Packages
 
 on:
   push:
@@ -33,6 +33,19 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Setup Node.js for GitHub Packages
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Configure .npmrc for GitHub Packages
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc
+
+      - name: Publish to GitHub Packages
+        run: npm publish
+
       - name: Create GitHub Release
         uses: actions/create-release@v1
         env:
@@ -45,8 +58,15 @@ jobs:
             ${{ github.event.head_commit.message }}
             
             ## Installation
+            
+            From npm:
             ```bash
             npm install dameng-mcp-server@${{ github.ref_name }}
+            ```
+            
+            From GitHub Packages:
+            ```bash
+            npm install dameng-mcp-server@${{ github.ref_name }} --registry=https://npm.pkg.github.com
             ```
             
             Or use npx:
