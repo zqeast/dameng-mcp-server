@@ -30,7 +30,20 @@ jobs:
       - name: Run tests
         run: npm test || echo "No test script found"
 
+      - name: Check if version exists on NPM
+        id: check_version
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          if npm view dameng-mcp-server@$PACKAGE_VERSION > /dev/null 2>&1; then
+            echo "Version $PACKAGE_VERSION already exists on NPM"
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "Version $PACKAGE_VERSION does not exist on NPM"
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Publish to NPM
+        if: steps.check_version.outputs.exists != 'true'
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
