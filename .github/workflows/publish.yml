@@ -32,3 +32,26 @@ jobs:
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
+          body: |
+            ## What's Changed
+            ${{ github.event.head_commit.message }}
+            
+            ## Installation
+            ```bash
+            npm install dameng-mcp-server@${{ github.ref_name }}
+            ```
+            
+            Or use npx:
+            ```bash
+            npx dameng-mcp-server
+            ```
+          draft: false
+          prerelease: false
