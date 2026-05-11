@@ -6,6 +6,7 @@ import DaMengConnection from './database.js';
 
 class DaMengMCPServer {
   constructor(config) {
+    this.config = config;
     this.server = new McpServer(
       {
         name: 'dameng-mcp-server',
@@ -47,9 +48,9 @@ class DaMengMCPServer {
         const result = await this.db.query(`
           SELECT TABLE_NAME 
           FROM ALL_TABLES 
-          WHERE OWNER = USER
+          WHERE OWNER = UPPER(?)
           ORDER BY TABLE_NAME
-        `);
+        `, [this.config.schema]);
         return {
           content: [
             {
@@ -79,9 +80,10 @@ class DaMengMCPServer {
             NULLABLE,
             DATA_DEFAULT
           FROM ALL_TAB_COLUMNS
-          WHERE TABLE_NAME = UPPER(?)
+          WHERE OWNER = UPPER(?)
+            AND TABLE_NAME = UPPER(?)
           ORDER BY COLUMN_ID
-        `, [table_name]);
+        `, [this.config.schema, table_name]);
         return {
           content: [
             {
